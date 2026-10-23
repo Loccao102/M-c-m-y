@@ -1,0 +1,204 @@
+{
+  "brand": "Mực Mây Studio",
+  "currency": "VND",
+  "categories": [
+    {
+      "slug": "so-tay-planner",
+      "name": "Sổ tay & Planner",
+      "description": "Lưu giữ ý tưởng và những kế hoạch dịu dàng."
+    },
+    {
+      "slug": "but-viet",
+      "name": "Bút & Dụng cụ viết",
+      "description": "Màu mực cho mỗi dòng suy nghĩ."
+    },
+    {
+      "slug": "phu-kien-ban-hoc",
+      "name": "Phụ kiện bàn học",
+      "description": "Để góc nhỏ của bạn luôn có cảm hứng."
+    },
+    {
+      "slug": "den-trang-tri",
+      "name": "Đèn & Trang trí",
+      "description": "Ánh sáng và vật dụng khiến căn phòng ấm hơn."
+    }
+  ],
+  "products": [
+    {
+      "sku": "MMS-001",
+      "slug": "so-tay-linen-ivory",
+      "name": "Sổ tay Linen Ivory",
+      "category": "so-tay-planner",
+      "regular_price": 129000,
+      "stock": 34,
+      "description": "Sổ bìa vải linen màu kem, giấy dày 100gsm, 160 trang.",
+      "short_description": "Mỗi trang giấy là một khoảng lặng để viết điều mình yêu.",
+      "image": "so-tay-linen-ivory.jpg"
+    },
+    {
+      "sku": "MMS-002",
+      "slug": "planner-tuan-cham-rai",
+      "name": "Planner Tuần Chậm Rãi",
+      "category": "so-tay-planner",
+      "regular_price": 149000,
+      "stock": 26,
+      "description": "Planner không ghi ngày, gồm bảng kế hoạch tuần và trang ghi chú.",
+      "short_description": "Lên kế hoạch vừa đủ, dành chỗ cho những bất ngờ nhỏ.",
+      "image": "planner-tuan-cham-rai.jpg"
+    },
+    {
+      "sku": "MMS-003",
+      "slug": "so-cham-muc-may",
+      "name": "Sổ Chấm Mực Mây",
+      "category": "so-tay-planner",
+      "regular_price": 115000,
+      "stock": 45,
+      "description": "Sổ chấm bi A5, đóng gáy chỉ và có dây đánh dấu trang.",
+      "short_description": "Nơi những ý tưởng nhỏ xinh bắt đầu.",
+      "image": "so-cham-muc-may.jpg"
+    },
+    {
+      "sku": "MMS-004",
+      "slug": "album-ky-uc-mini",
+      "name": "Album Ký Ức Mini",
+      "category": "so-tay-planner",
+      "regular_price": 169000,
+      "stock": 18,
+      "description": "Album scrapbook khổ vuông với 40 tờ giấy mỹ thuật dày.",
+      "short_description": "Giữ những khoảnh khắc đẹp trong một cuốn sổ bé xíu.",
+      "image": "album-ky-uc-mini.jpg"
+    },
+    {
+      "sku": "MMS-005",
+      "slug": "but-gel-may-trang",
+      "name": "Bút Gel Mây Trắng",
+      "category": "but-viet",
+      "regular_price": 39000,
+      "stock": 80,
+      "description": "Bút gel nét 0.5mm, thân nhám màu sữa, mực đen êm.",
+      "short_description": "Một nét mực mượt cho từng câu chuyện.",
+      "image": "but-gel-may-trang.jpg"
+    },
+    {
+      "sku": "MMS-006",
+      "slug": "bo-but-pastel",
+      "name": "Bộ Bút Pastel",
+      "category": "but-viet",
+      "regular_price": 89000,
+      "stock": 49,
+      "description": "Bộ 5 bút bi màu pastel, thân bút nhẹ và cầm chắc tay.",
+      "short_description": "Thêm chút dịu dàng vào bàn học mỗi ngày.",
+      "image": "bo-but-pastel.jpg"
+    },
+    {
+      "sku": "MMS-007",
+      "slug": "highlight-bon-mua",
+      "name": "Highlight Bốn Mùa",
+      "category": "but-viet",
+      "regular_price": 95000,
+      "stock": 31,
+      "description": "Bộ 4 bút dạ quang tông đất, mực khô nhanh và không chói.",
+      "short_description": "Đánh dấu điều quan trọng bằng những sắc màu thật dịu.",
+      "image": "highlight-bon-mua.jpg"
+    },
+    {
+      "sku": "MMS-008",
+      "slug": "but-may-go-nhat",
+      "name": "Bút Máy Gỗ Nhạt",
+      "category": "but-viet",
+      "regular_price": 189000,
+      "stock": 21,
+      "description": "Bút máy thân vân gỗ sáng, ngòi F, tặng kèm 2 ống mực.",
+      "short_description": "Cho những lá thư cần được viết thật chậm.",
+      "image": "but-may-go-nhat.jpg"
+    },
+    {
+      "sku": "MMS-009",
+      "slug": "khay-go-may-nho",
+      "name": "Khay Gỗ Mây Nhỏ",
+      "category": "phu-kien-ban-hoc",
+      "regular_price": 179000,
+      "stock": 24,
+      "description": "Khay đựng giấy note và phụ kiện bằng gỗ màu sáng.",
+      "short_description": "Góc bàn gọn hơn, tâm trí cũng nhẹ hơn.",
+      "image": "khay-go-may-nho.jpg"
+    },
+    {
+      "sku": "MMS-010",
+      "slug": "kep-giay-la-non",
+      "name": "Kẹp Giấy Lá Non",
+      "category": "phu-kien-ban-hoc",
+      "regular_price": 45000,
+      "stock": 90,
+      "description": "Set 12 kẹp giấy kim loại hình chiếc lá, hộp giấy tái chế.",
+      "short_description": "Giữ những trang giấy bằng một chiếc lá nhỏ.",
+      "image": "kep-giay-la-non.jpg"
+    },
+    {
+      "sku": "MMS-011",
+      "slug": "hop-but-canvas-moc",
+      "name": "Hộp Bút Canvas Mộc",
+      "category": "phu-kien-ban-hoc",
+      "regular_price": 119000,
+      "stock": 38,
+      "description": "Hộp bút vải canvas có lót, khóa kéo bền và dáng nhỏ gọn.",
+      "short_description": "Mang cả góc học tập theo trong chiếc túi xinh.",
+      "image": "hop-but-canvas-moc.jpg"
+    },
+    {
+      "sku": "MMS-012",
+      "slug": "gia-sach-mini-nang",
+      "name": "Giá Sách Mini Nắng",
+      "category": "phu-kien-ban-hoc",
+      "regular_price": 249000,
+      "stock": 12,
+      "description": "Giá sách gỗ nhỏ để bàn, thích hợp sổ tay và sách mỏng.",
+      "short_description": "Một chỗ đứng đẹp cho cuốn sách đang đọc dở.",
+      "image": "gia-sach-mini-nang.jpg"
+    },
+    {
+      "sku": "MMS-013",
+      "slug": "den-ban-moonlight",
+      "name": "Đèn Bàn Moonlight",
+      "category": "den-trang-tri",
+      "regular_price": 429000,
+      "stock": 17,
+      "description": "Đèn bàn LED ánh sáng vàng ấm, cổ đèn điều chỉnh dễ dàng.",
+      "short_description": "Một vùng sáng êm cho buổi tối bình yên.",
+      "image": "den-ban-moonlight.jpg"
+    },
+    {
+      "sku": "MMS-014",
+      "slug": "nen-thom-trang-giay",
+      "name": "Nến Thơm Trang Giấy",
+      "category": "den-trang-tri",
+      "regular_price": 159000,
+      "stock": 32,
+      "description": "Nến sáp đậu nành 120g, hương trà trắng và gỗ nhẹ.",
+      "short_description": "Mùi hương của những trang sách mới mở.",
+      "image": "nen-thom-trang-giay.jpg"
+    },
+    {
+      "sku": "MMS-015",
+      "slug": "lo-hoa-thuy-tinh-suong",
+      "name": "Lọ Hoa Thủy Tinh Sương",
+      "category": "den-trang-tri",
+      "regular_price": 129000,
+      "stock": 28,
+      "description": "Lọ hoa thủy tinh mờ dáng tròn, cao 14cm.",
+      "short_description": "Một cành hoa nhỏ cũng đủ làm ngày dịu đi.",
+      "image": "lo-hoa-thuy-tinh-suong.jpg"
+    },
+    {
+      "sku": "MMS-016",
+      "slug": "dong-ho-nhip-cham",
+      "name": "Đồng Hồ Nhịp Chậm",
+      "category": "den-trang-tri",
+      "regular_price": 279000,
+      "stock": 15,
+      "description": "Đồng hồ để bàn tối giản, kim trôi êm và mặt số dễ đọc.",
+      "short_description": "Nhắc mình trân trọng cả những phút giây rất nhỏ.",
+      "image": "dong-ho-nhip-cham.jpg"
+    }
+  ]
+}
