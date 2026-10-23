@@ -1,0 +1,39 @@
+name: Deploy theme to iNET (manual)
+on:
+  workflow_dispatch:
+jobs:
+  sftp:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate required SFTP settings
+        env:
+          HOST: ${{ secrets.SFTP_HOST }}
+          USER: ${{ secrets.SFTP_USERNAME }}
+          KEY: ${{ secrets.SFTP_PRIVATE_KEY }}
+          KNOWN: ${{ secrets.SFTP_KNOWN_HOSTS }}
+          DEST: ${{ secrets.WP_THEME_DIR }}
+        run: |
+          test -n "$HOST" && test -n "$USER" && test -n "$KEY" && test -n "$KNOWN" && test -n "$DEST" || { echo 'Missing SFTP secrets'; exit 1; }
+          case "$DEST" in */wp-content/themes/muc-may-studio|*/wp-content/themes/muc-may-studio/) ;; *) echo 'Unsafe WP_THEME_DIR'; exit 1 ;; esac
+      - name: Configure SSH host-key pinning
+        env:
+          KNOWN: ${{ secrets.SFTP_KNOWN_HOSTS }}
+          KEY: ${{ secrets.SFTP_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "$KNOWN" > ~/.ssh/known_hosts
+          printf '%s\n' "$KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/known_hosts ~/.ssh/deploy_key
+      - name: Sync theme files without deleting uploads
+        env:
+          HOST: ${{ secrets.SFTP_HOST }}
+          PORT: ${{ secrets.SFTP_PORT }}
+          USER: ${{ secrets.SFTP_USERNAME }}
+          DEST: ${{ secrets.WP_THEME_DIR }}
+        run: |
+          PORT="${PORT:-22}"
+          # scp recursively replaces theme code but does not delete uploaded images or DB.
+          scp -P "$PORT" -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes -r muc-may-studio/. "${USER}@${HOST}:${DEST%/}/"
