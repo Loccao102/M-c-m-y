@@ -1,0 +1,30 @@
+name: Check and package Muc May payments
+on:
+  push:
+    paths:
+      - 'muc-may-payments/**'
+      - 'tests/vnpay-signatures-test.php'
+      - '.github/workflows/check-payments.yml'
+  pull_request:
+    paths:
+      - 'muc-may-payments/**'
+      - 'tests/vnpay-signatures-test.php'
+      - '.github/workflows/check-payments.yml'
+  workflow_dispatch:
+jobs:
+  payments:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: PHP lint
+        run: find muc-may-payments -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Signature integrity tests
+        run: php tests/vnpay-signatures-test.php
+      - name: Checkout Blocks JS syntax
+        run: node --check muc-may-payments/assets/blocks.js
+      - name: Package plugin
+        run: zip -qr muc-may-payments-vnpay-sandbox.zip muc-may-payments
+      - uses: actions/upload-artifact@v4
+        with:
+          name: muc-may-payments-vnpay-sandbox
+          path: muc-may-payments-vnpay-sandbox.zip
