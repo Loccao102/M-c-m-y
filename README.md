@@ -16,7 +16,7 @@ Sản phẩm, ảnh, giá, tồn kho, đơn hàng được quản lý **trực t
 ## Thư mục
 
 - `muc-may-studio/`: theme PHP/CSS/JS (code)
-- `muc-may-demo-content/`: plugin dữ liệu mẫu (chỉ cần chạy một lần)
+- `muc-may-demo-content/`: công cụ khởi tạo danh mục và sản phẩm (chỉ chạy khi quản trị viên yêu cầu)
 - `.github/workflows/`: kiểm tra cú pháp và quy trình triển khai tùy chọn
 
 Lưu ý: các ảnh gốc trong theme v2.1 được giữ nguyên để không làm thay đổi nội dung hiện có. ZIP bản đầy đủ đóng gói kèm các ảnh này. Việc đồng bộ bằng SFTP **không dùng `--delete`**, nhằm không xóa ảnh đã có trên hosting.
@@ -41,4 +41,4 @@ Nếu tài khoản iNET chỉ hỗ trợ FTP, tiếp tục nâng cấp qua ZIP h
 
 ## Kiểm thử
 
-Chạy `php -l` với toàn bộ `.php` trong theme/plugin. Kiểm tra đơn COD thử và sau đó hủy đơn thử. Không lưu thông tin người mua thật vào repo.
+Chạy `php -l` với toàn bộ `.php` trong theme/plugin. Kiểm tra quy trình mua hàng trong môi trường kiểm thử và không lưu dữ liệu khách hàng hay thông tin bí mật trong repository.

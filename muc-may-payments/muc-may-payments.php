@@ -20,7 +20,7 @@ register_activation_hook(__FILE__, function () {
             'enabled' => 'yes',
             'title' => 'Thanh toán khi nhận hàng (COD)',
             'description' => 'Thanh toán bằng tiền mặt khi nhận sản phẩm.',
-            'instructions' => 'Đây là đơn đặt hàng demo. Không chuyển tiền trước.',
+            'instructions' => 'Vui lòng chuẩn bị tiền mặt để thanh toán khi nhận hàng.',
             'enable_for_methods' => array(),
             'enable_for_virtual' => 'yes',
         ));

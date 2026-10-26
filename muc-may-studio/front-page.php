@@ -53,7 +53,7 @@ $categories = array(
  }
  $products = new WP_Query( $args );
  if ( $products->have_posts() ) { while ( $products->have_posts() ) { $products->the_post(); mucmay_product_card( get_the_ID() ); } wp_reset_postdata(); }
- else { echo '<p class="mm-empty-state">Chưa có món đồ nào được xếp lên kệ. Hãy vào Công cụ → Mực Mây Demo để nhập 16 sản phẩm mẫu.</p>'; }
+ else { echo '<p class="mm-empty-state">Những món đồ nhỏ đang được Mực Mây chuẩn bị. Hẹn bạn ghé lại khi kệ hàng đã đầy nhé.</p>'; }
  else : echo '<p class="mm-empty-state">Vui lòng kích hoạt WooCommerce để hiển thị sản phẩm.</p>'; endif; ?>
  </div><div class="mm-products-after"><span>ĐÃ GÓP NHẶT / TỪNG CHÚT MỘT</span><a href="<?php echo esc_url( mucmay_shop_url() ); ?>">Xem thêm những món hay ho <span aria-hidden="true">↗</span></a></div>
  </div></section><?php endif; ?>

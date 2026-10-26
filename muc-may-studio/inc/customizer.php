@@ -63,7 +63,7 @@ function mucmay_register_studio_controls( $manager ) {
         'mucmay_story_paragraph_2' => array( 'editorial', 'Câu chuyện, đoạn 2', 'textarea', 'Đồ giấy thì bé thôi. Nhưng những gì bạn viết lên đó, biết đâu lại rất lớn.' ),
         'mucmay_story_cta' => array( 'editorial', 'Nút đọc câu chuyện', 'text', 'ĐỌC CÂU CHUYỆN CỦA TIỆM' ),
         'mucmay_footer_note' => array( 'footer', 'Lời nhắn chân trang', 'textarea', 'Cảm ơn bạn đã ghé qua. Hy vọng hôm nay có một điều nhỏ khiến bạn muốn viết lại.' ),
-        'mucmay_footer_disclaimer' => array( 'footer', 'Lưu ý cửa hàng', 'textarea', 'Đây là website thực hành WordPress & WooCommerce. Các sản phẩm và đơn hàng chỉ phục vụ mục đích minh họa.' ),
+        'mucmay_footer_disclaimer' => array( 'footer', 'Lời nhắn từ tiệm', 'textarea', 'Mực Mây tin rằng những ý tưởng hay thường bắt đầu từ một trang giấy. Cảm ơn bạn đã dành một góc nhỏ cho tiệm.' ),
         'mucmay_footer_tagline' => array( 'footer', 'Khẩu hiệu cuối chân trang', 'text', 'CHẾ TÁC TỪ GIẤY, MỰC & CHÚT TÒ MÒ.' ),
     );
 
@@ -153,5 +153,50 @@ function mucmay_render_admin_settings() {
         <tr><td><strong>Menu</strong></td><td>Giao diện → Menu</td></tr>
       </tbody></table>
       <p><em>Nội dung tùy chỉnh được lưu trong cơ sở dữ liệu WordPress. Các lần cập nhật theme sau không xóa nội dung này, miễn là giữ nguyên thư mục/tên theme.</em></p>
+      <hr>
+      <h2>Hoàn thiện nội dung trang Giới thiệu & Liên hệ</h2>
+      <p>Chỉ làm mới các đoạn khởi tạo cũ trùng khớp, giữ nguyên mọi nội dung bạn đã tự chỉnh sửa.</p>
+      <?php if ( isset( $_GET['mucmay_brand'] ) && 'done' === sanitize_key( wp_unslash( $_GET['mucmay_brand'] ) ) ) : ?>
+      <div class="notice notice-success inline"><p>Đã kiểm tra và thay thế những đoạn khởi tạo cũ. Hãy mở Trang → Giới thiệu / Liên hệ để rà soát.</p></div>
+      <?php endif; ?>
+      <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+        <input type="hidden" name="action" value="mucmay_brand_refresh">
+        <?php wp_nonce_field( 'mucmay_brand_refresh' ); ?>
+        <?php submit_button( 'Làm mới nội dung khởi tạo cũ', 'secondary' ); ?>
+      </form>
     </div><?php
 }
+
+
+/** Safely refresh only recognizable, original starter paragraphs when an administrator asks. */
+function mucmay_brand_refresh() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_die( 'Bạn không có quyền thực hiện thao tác này.', '', array( 'response' => 403 ) );
+    }
+    check_admin_referer( 'mucmay_brand_refresh' );
+    $legacy_footer = 'Đây là website thực hành WordPress & WooCommerce. Các sản phẩm và đơn hàng chỉ phục vụ mục đích minh họa.';
+    if ( get_theme_mod( 'mucmay_footer_disclaimer' ) === $legacy_footer ) {
+        set_theme_mod( 'mucmay_footer_disclaimer', 'Mực Mây tin rằng những ý tưởng hay thường bắt đầu từ một trang giấy. Cảm ơn bạn đã dành một góc nhỏ cho tiệm.' );
+    }
+    $replacements = array(
+        'gioi-thieu' => array(
+            '<p><em>Đây là dự án website thực hành WordPress + WooCommerce, thông tin và sản phẩm chỉ mang tính minh họa.</em></p>' => '<p>Hy vọng mỗi món đồ ở Mực Mây sẽ giúp bạn giữ lại những ý tưởng, câu chuyện và cảm hứng của riêng mình.</p>',
+        ),
+        'lien-he' => array(
+            '<p>Mực Mây Studio là cửa hàng demo phục vụ bài tập WordPress. Trang này hiện dùng để giới thiệu thông tin liên hệ và chưa tiếp nhận yêu cầu đặt hàng thực tế.</p>' => '<p>Có một món đồ bạn đang tìm, hay một điều nhỏ muốn kể? Mực Mây rất vui khi nhận được lời nhắn của bạn.</p>',
+            '<p>Bạn có thể thử quy trình mua hàng thông qua giỏ hàng và trang thanh toán COD mô phỏng trên website.</p>' => '<p>Để được hỗ trợ về sản phẩm hoặc đơn hàng, hãy sử dụng thông tin liên hệ chính thức được cập nhật trên cửa tiệm.</p>',
+            '<h3>Thời gian hỗ trợ (minh họa)</h3><p>Thứ 2 – Thứ 6: 9:00 – 18:00</p>' => '<h3>Chuyện nhỏ của chúng mình</h3><p>Từ câu hỏi về một cuốn sổ đến góp ý cho trải nghiệm mua sắm, mỗi lời nhắn đều đáng được lắng nghe.</p>',
+        ),
+    );
+    foreach ( $replacements as $slug => $pairs ) {
+        $page = get_page_by_path( $slug, OBJECT, 'page' );
+        if ( ! $page || 'trash' === $page->post_status ) { continue; }
+        $updated = str_replace( array_keys( $pairs ), array_values( $pairs ), $page->post_content );
+        if ( $updated !== $page->post_content ) {
+            wp_update_post( array( 'ID' => $page->ID, 'post_content' => $updated ) );
+        }
+    }
+    wp_safe_redirect( add_query_arg( 'mucmay_brand', 'done', admin_url( 'themes.php?page=mucmay-studio' ) ) );
+    exit;
+}
+add_action( 'admin_post_mucmay_brand_refresh', 'mucmay_brand_refresh' );

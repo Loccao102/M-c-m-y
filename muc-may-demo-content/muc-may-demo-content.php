@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: Mực Mây – Demo Content
- * Description: Nhập 16 sản phẩm mẫu, 4 danh mục, ảnh minh họa và các trang cơ bản cho theme Mực Mây Studio. Chỉ chạy khi quản trị viên chủ động nhấn nút.
+ * Plugin Name: Mực Mây – Catalog Setup
+ * Description: Thiết lập danh mục, sản phẩm, hình ảnh và các trang cơ bản cho Mực Mây Studio. Chỉ chạy khi quản trị viên chủ động xác nhận.
  * Version: 1.0.1
  * Requires PHP: 7.4
  * Text Domain: muc-may-demo
@@ -9,7 +9,7 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 function mucmay_demo_admin_menu() {
-    add_management_page( 'Mực Mây Demo', 'Mực Mây Demo', 'manage_options', 'muc-may-demo', 'mucmay_demo_admin_page' );
+    add_management_page( 'Mực Mây · Danh mục', 'Mực Mây · Danh mục', 'manage_options', 'muc-may-demo', 'mucmay_demo_admin_page' );
 }
 add_action( 'admin_menu', 'mucmay_demo_admin_menu' );
 
@@ -22,22 +22,22 @@ function mucmay_demo_admin_page() {
     $created = isset( $_GET['mm_created'] ) ? absint( wp_unslash( $_GET['mm_created'] ) ) : null;
     $status = isset( $_GET['mm_status'] ) ? sanitize_key( wp_unslash( $_GET['mm_status'] ) ) : '';
     ?>
-    <div class="wrap" style="max-width:900px"><h1>Mực Mây Studio · Nhập dữ liệu mẫu</h1>
-      <p>Nhấn <strong>Nhập dữ liệu mẫu</strong> để tạo 4 danh mục, 16 sản phẩm WooCommerce có ảnh thật trong Media Library, trang chủ, giới thiệu, liên hệ và các trang mua hàng còn thiếu. Không ghi đè sản phẩm đã có cùng SKU.</p>
+    <div class="wrap" style="max-width:900px"><h1>Mực Mây Studio · Thiết lập danh mục</h1>
+      <p>Khởi tạo 4 danh mục, 16 sản phẩm WooCommerce có ảnh trong Media Library và những trang cửa hàng còn thiếu. Không ghi đè sản phẩm đã có cùng SKU.</p>
       <?php if ( ! mucmay_demo_ready() ) : ?>
       <div class="notice notice-error"><p>Bạn phải <strong>kích hoạt WooCommerce và theme “Mực Mây Studio”</strong> trước khi nhập.</p></div>
       <?php endif; ?>
-      <?php if ( 'done' === $status ) : ?><div class="notice notice-success"><p>Đã xử lý dữ liệu mẫu. Tạo thêm <?php echo esc_html( $created ); ?> sản phẩm (những SKU đã tồn tại sẽ được giữ nguyên). <a href="<?php echo esc_url( home_url( '/' ) ); ?>" target="_blank" rel="noopener">Xem trang chủ ↗</a></p></div><?php endif; ?>
+      <?php if ( 'done' === $status ) : ?><div class="notice notice-success"><p>Đã đồng bộ danh mục. Tạo thêm <?php echo esc_html( $created ); ?> sản phẩm (những SKU đã tồn tại sẽ được giữ nguyên). <a href="<?php echo esc_url( home_url( '/' ) ); ?>" target="_blank" rel="noopener">Xem trang chủ ↗</a></p></div><?php endif; ?>
       <?php if ( 'error' === $status ) : ?><div class="notice notice-error"><p>Không thể nhập dữ liệu. Vui lòng kiểm tra WooCommerce, theme đang kích hoạt và quyền ghi thư mục uploads của hosting.</p></div><?php endif; ?>
       <div class="card" style="max-width:780px;padding:24px"><h2>Dữ liệu được thêm</h2>
       <ul style="list-style:disc;padding-left:22px"><li>16 sản phẩm, mô tả, giá VND, tồn kho và ảnh.</li><li>4 danh mục sản phẩm.</li><li>Trang Trang chủ, Giới thiệu, Liên hệ, Cửa tiệm (nếu chưa có).</li><li>Giỏ hàng, Thanh toán, Tài khoản (chỉ bổ sung khi WooCommerce chưa tạo).</li></ul>
-      <p><strong>Lưu ý:</strong> Đây là cửa hàng demo, các giá và hàng tồn kho chỉ là dữ liệu minh họa. Công cụ đặt trang chủ tĩnh là “Trang chủ” và đơn vị tiền tệ là VND. Không tự bật thanh toán trực tuyến hay thêm đơn hàng.</p>
+      <p><strong>Lưu ý:</strong> Hãy rà soát giá bán, số lượng tồn, hình ảnh và khả năng giao hàng trước khi mở bán. Công cụ thiết lập trang chủ và đơn vị tiền tệ VND; không tự bật cổng thanh toán hoặc tạo đơn hàng.</p>
       <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
       <input type="hidden" name="action" value="mucmay_demo_import">
       <?php wp_nonce_field( 'mucmay_demo_import' ); ?>
-      <?php submit_button( 'Nhập dữ liệu mẫu', 'primary', 'submit', false, mucmay_demo_ready() ? array() : array( 'disabled' => 'disabled' ) ); ?>
+      <?php submit_button( 'Khởi tạo danh mục', 'primary', 'submit', false, mucmay_demo_ready() ? array() : array( 'disabled' => 'disabled' ) ); ?>
       </form></div>
-      <p>Sau khi nhập: kiểm tra <strong>Products → All Products</strong>, rồi vào <strong>WooCommerce → Settings → Payments</strong> bật <strong>Cash on delivery</strong> để đặt hàng thử.</p>
+      <p>Sau khi thiết lập: kiểm tra <strong>Products → All Products</strong> và cấu hình các phương thức thanh toán, vận chuyển tại <strong>WooCommerce → Settings</strong>.</p>
     </div>
     <?php
 }
@@ -111,13 +111,13 @@ function mucmay_demo_import() {
             $product->save();
             $created++;
         } catch ( Exception $e ) {
-            error_log( 'Mực Mây Demo import: ' . $e->getMessage() ); // Logging without credentials.
+            error_log( 'Mực Mây Catalog import: ' . $e->getMessage() ); // Logging without credentials.
         }
     }
 
     $home = mucmay_demo_insert_page( 'Trang chủ', 'trang-chu', '<p>Trang chủ được hiển thị bằng giao diện Mực Mây Studio.</p>' );
-    mucmay_demo_insert_page( 'Giới thiệu', 'gioi-thieu', '<h2>Tiệm đồ giấy và những điều chưa viết</h2><p>Đôi khi ta cần một chỗ để cất lại những điều chưa biết nói với ai. Mực Mây Studio bắt đầu từ ý nghĩ đơn giản ấy: giấy, mực và một góc bàn có thể khiến người ta muốn ngồi xuống và viết.</p><h2>Mỗi trang giấy là một khả năng</h2><p>Chúng mình góp nhặt sổ tay, bút viết, đồ trang trí và những món nhỏ tạo cảm hứng. Đồ giấy thì bé thôi, nhưng những gì được viết lên đó có thể rất lớn.</p><p><em>Đây là dự án website thực hành WordPress + WooCommerce, thông tin và sản phẩm chỉ mang tính minh họa.</em></p>' );
-    mucmay_demo_insert_page( 'Liên hệ', 'lien-he', '<h2>Gửi Mực Mây một lời nhắn</h2><p>Mực Mây Studio là cửa hàng demo phục vụ bài tập WordPress. Trang này hiện dùng để giới thiệu thông tin liên hệ và chưa tiếp nhận yêu cầu đặt hàng thực tế.</p><p>Bạn có thể thử quy trình mua hàng thông qua giỏ hàng và trang thanh toán COD mô phỏng trên website.</p><h3>Thời gian hỗ trợ (minh họa)</h3><p>Thứ 2 – Thứ 6: 9:00 – 18:00</p>' );
+    mucmay_demo_insert_page( 'Giới thiệu', 'gioi-thieu', '<h2>Tiệm đồ giấy và những điều chưa viết</h2><p>Đôi khi ta cần một chỗ để cất lại những điều chưa biết nói với ai. Mực Mây Studio bắt đầu từ ý nghĩ đơn giản ấy: giấy, mực và một góc bàn có thể khiến người ta muốn ngồi xuống và viết.</p><h2>Mỗi trang giấy là một khả năng</h2><p>Chúng mình góp nhặt sổ tay, bút viết, đồ trang trí và những món nhỏ tạo cảm hứng. Đồ giấy thì bé thôi, nhưng những gì được viết lên đó có thể rất lớn.</p><p>Hy vọng mỗi món đồ ở Mực Mây sẽ giúp bạn giữ lại những ý tưởng, câu chuyện và cảm hứng của riêng mình.</p>' );
+    mucmay_demo_insert_page( 'Liên hệ', 'lien-he', '<h2>Gửi Mực Mây một lời nhắn</h2><p>Có một món đồ bạn đang tìm, hay một điều nhỏ muốn kể? Mực Mây rất vui khi nhận được lời nhắn của bạn.</p><p>Để được hỗ trợ về sản phẩm hoặc đơn hàng, hãy sử dụng thông tin liên hệ chính thức được cập nhật trên cửa tiệm.</p><h3>Chuyện nhỏ của chúng mình</h3><p>Từ câu hỏi về một cuốn sổ đến góp ý cho trải nghiệm mua sắm, mỗi lời nhắn đều đáng được lắng nghe.</p>' );
 
     $shop_id = (int) get_option( 'woocommerce_shop_page_id', 0 );
     if ( $shop_id <= 0 || 'publish' !== get_post_status( $shop_id ) ) { $shop_id = mucmay_demo_insert_page( 'Cửa tiệm', 'cua-tiem', '' ); update_option( 'woocommerce_shop_page_id', $shop_id ); }
