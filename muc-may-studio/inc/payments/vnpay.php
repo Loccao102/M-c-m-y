@@ -196,7 +196,7 @@ function mucmay_vnpay_theme_blocks($registry) {
     if (!class_exists('MucMay_Vnpay_Theme_Blocks')) {
         class MucMay_Vnpay_Theme_Blocks extends Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType {
             protected $name = 'mucmay_theme_vnpay';
-            private $settings = array();
+            // Inherit the protected settings property from AbstractPaymentMethodType.
             public function initialize() {
                 $this->settings = (array) get_option('woocommerce_mucmay_theme_vnpay_settings', array());
             }
