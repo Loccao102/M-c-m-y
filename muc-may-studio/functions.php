@@ -93,6 +93,7 @@ function mucmay_product_card( $product_id ) {
 }
 
 require_once get_template_directory() . '/inc/customizer.php';
+require_once get_template_directory() . '/inc/payments/vnpay.php';
 
 function mucmay_excerpt_length( $length ) { return 22; }
 add_filter( 'excerpt_length', 'mucmay_excerpt_length' );

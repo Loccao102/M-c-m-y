@@ -11,6 +11,8 @@ jobs:
       - name: Lint PHP source
         run: |
           find muc-may-studio muc-may-demo-content -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Verify VNPAY signature
+        run: php tests/vnpay-theme-signature-test.php
       - name: Package theme
         run: |
           zip -qr muc-may-studio-theme.zip muc-may-studio -x '*.DS_Store'
