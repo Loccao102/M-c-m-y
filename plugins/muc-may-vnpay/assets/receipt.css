@@ -1,0 +1,40 @@
+/* Mực Mây Studio · boutique receipt page, scoped to VNPAY WooCommerce order-received. */
+body.mmvnpay-receipt .woocommerce-order > .woocommerce-notice,
+body.mmvnpay-receipt .woocommerce-order > .woocommerce-order-overview { display:none !important; }
+body.mmvnpay-receipt .woocommerce-order { color:#29251e; }
+body.mmvnpay-receipt .mmvnpay-receipt-hero { --mm-red:#b4463b; background:#fbf7ed; color:#29251e; margin:10px 0 45px; border:1px solid #b8aa96; box-shadow:8px 8px 0 #cfc4b4; overflow:hidden; }
+body.mmvnpay-receipt .mmvnpay-receipt-topline { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; background:#29251e; color:#fdf8ef; padding:12px 24px; letter-spacing:.12em; text-transform:uppercase; font-size:10px; font-weight:700; }
+body.mmvnpay-receipt .mmvnpay-receipt-body { padding:48px 35px 34px; text-align:center; }
+body.mmvnpay-receipt .mmvnpay-receipt-mark { margin:0 auto 18px; display:grid; place-items:center; width:74px; height:74px; border-radius:50%; background:#dce5d9; border:2px solid #567859; color:#395a3e; font-size:35px; font-weight:700; }
+body.mmvnpay-receipt .mmvnpay-receipt-hero--failed .mmvnpay-receipt-mark { background:#f7e6e1; color:#b4463b; border-color:#b4463b; }
+body.mmvnpay-receipt .mmvnpay-receipt-hero--pending .mmvnpay-receipt-mark { background:#f0e8d5; color:#8b6c39; border-color:#8b6c39; }
+body.mmvnpay-receipt .mmvnpay-receipt-eyebrow { display:inline-block; color:#59745a; letter-spacing:.15em; font-size:10px; font-weight:800; margin:4px auto 10px; }
+body.mmvnpay-receipt .mmvnpay-receipt-hero--failed .mmvnpay-receipt-eyebrow {color:#b4463b;}
+body.mmvnpay-receipt .mmvnpay-receipt-hero--pending .mmvnpay-receipt-eyebrow {color:#8b6c39;}
+body.mmvnpay-receipt .mmvnpay-receipt-body h1 { font-size:clamp(30px,4vw,47px); font-weight:800; letter-spacing:-.035em; line-height:1.24; margin:0 auto 12px; }
+body.mmvnpay-receipt .mmvnpay-receipt-body > p { max-width:480px; margin:0 auto; line-height:1.9; font-size:13px; color:#706457; }
+body.mmvnpay-receipt .mmvnpay-receipt-facts { margin:38px auto 0; padding:18px 0 0; border-top:1px solid #d8cdbc; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); max-width:680px; }
+body.mmvnpay-receipt .mmvnpay-receipt-facts > div { display:flex; flex-direction:column; gap:5px; padding:8px 14px; border-right:1px solid #d8cdbc; }
+body.mmvnpay-receipt .mmvnpay-receipt-facts > div:last-child { border:0; }
+body.mmvnpay-receipt .mmvnpay-receipt-facts span { color:#8b7766; letter-spacing:.1em; font-size:10px; font-weight:700; }
+body.mmvnpay-receipt .mmvnpay-receipt-facts strong { font-size:15px; overflow-wrap:anywhere; }
+body.mmvnpay-receipt .mmvnpay-receipt-footer { display:flex; justify-content:space-between; gap:12px; background:#eee6d8; padding:12px 24px; font-size:11px; font-weight:600; color:#7b6656; }
+body.mmvnpay-receipt .mmvnpay-receipt-footer span:last-child { color:var(--mm-red); white-space:nowrap; }
+body.mmvnpay-receipt .woocommerce-order-details,
+body.mmvnpay-receipt .woocommerce-customer-details { margin:0 0 42px; }
+body.mmvnpay-receipt .woocommerce-order h2 { font-size:clamp(23px,2.5vw,32px); letter-spacing:-.02em; margin:24px 0 18px; font-weight:800; }
+body.mmvnpay-receipt .woocommerce-table--order-details { width:100%; background:#fffaf1; border:1px solid #d3c5b5; border-collapse:collapse; }
+body.mmvnpay-receipt .woocommerce-table--order-details th,
+body.mmvnpay-receipt .woocommerce-table--order-details td { padding:15px 20px; border-bottom:1px solid #dcd1c3; font-size:13px; }
+body.mmvnpay-receipt .woocommerce-table--order-details thead { background:#eee6d8; }
+body.mmvnpay-receipt .woocommerce-table--order-details tfoot tr:last-child { background:#eee6d8; font-size:16px; }
+body.mmvnpay-receipt .woocommerce-customer-details address { background:#fffaf1; border:1px solid #d3c5b5; padding:20px; font-style:normal; line-height:2; min-height:155px; }
+body.mmvnpay-receipt .woocommerce-order-details a { color:#ac453b; text-decoration:underline; text-underline-offset:3px; }
+@media(max-width:650px) {
+ body.mmvnpay-receipt .mmvnpay-receipt-body {padding:34px 15px 25px;}
+ body.mmvnpay-receipt .mmvnpay-receipt-topline {padding:12px 14px;}
+ body.mmvnpay-receipt .mmvnpay-receipt-facts {grid-template-columns:1fr; gap:0;}
+ body.mmvnpay-receipt .mmvnpay-receipt-facts > div {border-right:0; border-bottom:1px solid #d8cdbc;}
+ body.mmvnpay-receipt .mmvnpay-receipt-footer {padding:12px 14px; font-size:9px;}
+ body.mmvnpay-receipt .woocommerce-table--order-details th,body.mmvnpay-receipt .woocommerce-table--order-details td {padding:12px 10px;}
+}
