@@ -13,7 +13,7 @@ $paid = $has_order && $order->is_paid();
 $failed = $has_order && $order->has_status(array('failed', 'cancelled', 'refunded'));
 $state = $paid ? 'paid' : ($failed ? 'failed' : 'pending');
 $label = $paid ? 'ĐÃ THANH TOÁN' : ($failed ? 'CHƯA THANH TOÁN' : 'ĐANG XÁC NHẬN');
-$title = $paid ? 'Một chiếc đơn hàng\nđã về với Mực Mây.' : ($failed ? 'Chuyến ghé thăm\nchưa trọn vẹn.' : 'Mực Mây đã nhận\nđơn của bạn.');
+$title = $paid ? "Một chiếc đơn hàng\nđã về với Mực Mây." : ($failed ? "Chuyến ghé thăm\nchưa trọn vẹn." : "Mực Mây đã nhận\nđơn của bạn.");
 $intro = $paid
     ? 'Cảm ơn bạn đã chọn những món nhỏ xinh tại Mực Mây. Chúng mình sẽ gói ghém đơn hàng thật cẩn thận để gửi đến bạn.'
     : ($failed

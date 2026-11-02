@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Mực Mây — Trang xác nhận đơn hàng
  * Description: Trang cảm ơn riêng theo phong cách Mực Mây, dùng dữ liệu đơn hàng WooCommerce thật. Không thay đổi cổng thanh toán.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Requires at least: 6.4
  * Requires PHP: 7.4
  * Requires Plugins: woocommerce
@@ -27,6 +27,6 @@ add_filter('woocommerce_locate_template', static function ($template, $template_
 
 add_action('wp_enqueue_scripts', static function () {
     if (function_exists('is_wc_endpoint_url') && is_wc_endpoint_url('order-received')) {
-        wp_enqueue_style('mm-order-note', plugin_dir_url(__FILE__) . 'assets/order-note.css', array(), '1.0.0');
+        wp_enqueue_style('mm-order-note', plugin_dir_url(__FILE__) . 'assets/order-note.css', array(), '1.0.1');
     }
 }, 25);
