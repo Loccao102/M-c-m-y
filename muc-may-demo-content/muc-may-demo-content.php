@@ -105,7 +105,9 @@ function mucmay_demo_import() {
             $product->set_stock_status( 'instock' );
             if ( isset( $categories[ $item['category'] ] ) ) { $product->set_category_ids( array( $categories[ $item['category'] ] ) ); }
             if ( 0 === $i % 4 ) { $product->set_featured( true ); }
-            $image_path = get_template_directory() . '/assets/images/products/' . basename( $item['image'] );
+            $plugin_image = plugin_dir_path( __FILE__ ) . 'assets/images/products/' . basename( $item['image'] );
+            $theme_image  = get_template_directory() . '/assets/images/products/' . basename( $item['image'] );
+            $image_path   = file_exists( $plugin_image ) ? $plugin_image : $theme_image;
             $image_id = mucmay_demo_product_image( $image_path );
             if ( $image_id ) { $product->set_image_id( $image_id ); }
             $product->save();
