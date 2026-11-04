@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Mực Mây — Thống kê mua & bán
  * Description: Hiển thị lượt sản phẩm đã bán tại cửa hàng và bảng tổng quan đơn hàng trong WooCommerce Admin.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Requires at least: 6.4
  * Requires PHP: 7.4
  * Requires Plugins: woocommerce
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'MUC_MAY_SALES_VERSION', '1.0.0' );
+define( 'MUC_MAY_SALES_VERSION', '1.1.0' );
 define( 'MUC_MAY_SALES_PLUGIN_FILE', __FILE__ );
 
 /**
@@ -27,7 +27,12 @@ function mucmay_sales_markup( $product, $context = 'catalog' ) {
     }
 
     $units = max( 0, (int) $product->get_total_sales() );
-    $class = $context === 'single' ? 'mm-sales-count mm-sales-count--single' : 'mm-sales-count';
+    $class = 'mm-sales-count';
+    if ( 'single' === $context ) {
+        $class .= ' mm-sales-count--single';
+    } elseif ( 'home' === $context ) {
+        $class .= ' mm-sales-count--home';
+    }
     $label = sprintf(
         /* translators: %s is the total number of units sold. */
         __( 'Đã bán %s', 'muc-may-sales' ),
@@ -49,7 +54,7 @@ function mucmay_sales_home_price( $html, $product ) {
     if ( is_admin() || wp_doing_ajax() || ! function_exists( 'is_front_page' ) || ! is_front_page() ) {
         return $html;
     }
-    return $html . mucmay_sales_markup( $product );
+    return $html . mucmay_sales_markup( $product, 'home' );
 }
 
 /** Standard WooCommerce archive and single-product hooks. */
@@ -73,6 +78,56 @@ function mucmay_sales_assets() {
         function_exists( 'is_product_tag' ) && is_product_tag() ) {
         wp_enqueue_style( 'mucmay-sales', plugins_url( 'assets/sales.css', MUC_MAY_SALES_PLUGIN_FILE ), array(), MUC_MAY_SALES_VERSION );
     }
+}
+
+/**
+ * A clear "sort by sales" option in the native WooCommerce catalog dropdown.
+ * The native `popularity` sort already uses WooCommerce sales totals via the
+ * product lookup table, so avoid implementing a second potentially slower SQL
+ * query or a meta query which might omit products with zero sales.
+ */
+function mucmay_sales_sorting_options( $options ) {
+    if ( ! is_array( $options ) ) {
+        return $options;
+    }
+    // Show this prominently, including stores where sorting was customized.
+    $sales_label = __( 'Bán chạy nhất (theo lượt bán)', 'muc-may-sales' );
+    $result = array();
+    foreach ( $options as $key => $label ) {
+        $result[ $key ] = $label;
+        if ( 'menu_order' === $key ) {
+            $result['popularity'] = $sales_label;
+        }
+    }
+    $result['popularity'] = $sales_label;
+    return $result;
+}
+
+/** Explicitly expose sales count in the WP Admin products table. */
+function mucmay_sales_product_column( $columns ) {
+    $columns['mucmay_sales_total'] = __( 'Đã bán', 'muc-may-sales' );
+    return $columns;
+}
+
+function mucmay_sales_product_column_value( $column, $product_id ) {
+    if ( 'mucmay_sales_total' !== $column || ! function_exists( 'wc_get_product' ) ) {
+        return;
+    }
+    $product = wc_get_product( $product_id );
+    echo esc_html( number_format_i18n( $product ? max( 0, (int) $product->get_total_sales() ) : 0 ) );
+}
+
+/** Disable stale-looking badges when cached pages load an older stylesheet. */
+function mucmay_sales_admin_plugin_notice() {
+    if ( ! current_user_can( 'manage_woocommerce' ) ) {
+        return;
+    }
+    // Only show on our own statistics page.
+    if ( ! isset( $_GET['page'] ) || 'mucmay-sales' !== sanitize_key( wp_unslash( $_GET['page'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        return;
+    }
+    echo '<div class="notice notice-info"><p><strong>Mực Mây v' . esc_html( MUC_MAY_SALES_VERSION ) . '</strong>: ' .
+        esc_html__( 'Lượt bán lấy từ dữ liệu WooCommerce (đơn đã thanh toán), bao gồm cả số 0. Nếu ngoài cửa hàng chưa hiện, hãy xóa cache LiteSpeed/CDN và kiểm tra plugin đang Kích hoạt.', 'muc-may-sales' ) . '</p></div>';
 }
 
 function mucmay_sales_admin_page() {
@@ -157,7 +212,7 @@ function mucmay_sales_admin_page() {
       </div>
       <div class="mm-sales-admin__foot">
         <p><strong>Đọc đúng số liệu:</strong> “Đơn đã thanh toán” đếm số đơn ở trạng thái WooCommerce coi là đã trả tiền; “Sản phẩm đã bán” là số lượng sản phẩm, không phải số khách mua. Đơn đang chờ thanh toán không được tính vào số đơn đã thanh toán.</p>
-        <div class="mm-sales-admin__links"><a href="<?php echo esc_url( $orders_link ); ?>">Xem đơn hàng &rarr;</a><a href="<?php echo esc_url( $analytics_link ); ?>">WooCommerce Analytics &rarr;</a></div>
+        <div class="mm-sales-admin__links"><a href="<?php echo esc_url( add_query_arg( 'orderby', 'popularity', wc_get_page_permalink( 'shop' ) ) ); ?>">Xem cửa hàng theo lượt bán &rarr;</a><a href="<?php echo esc_url( $orders_link ); ?>">Xem đơn hàng &rarr;</a><a href="<?php echo esc_url( $analytics_link ); ?>">WooCommerce Analytics &rarr;</a></div>
       </div>
     </div>
     <?php
@@ -169,8 +224,16 @@ function mucmay_sales_bootstrap() {
     }
 
     add_filter( 'woocommerce_get_price_html', 'mucmay_sales_home_price', 99, 2 );
+
+    // Re-label WooCommerce's existing best-selling ordering mode. It sorts by
+    // WC's total_sales field and remains available even when there are 0 sales.
+    add_filter( 'woocommerce_catalog_orderby', 'mucmay_sales_sorting_options', 25 );
+    add_filter( 'woocommerce_default_catalog_orderby_options', 'mucmay_sales_sorting_options', 25 );
     add_action( 'woocommerce_after_shop_loop_item_title', 'mucmay_sales_loop_note', 12 );
     add_action( 'woocommerce_single_product_summary', 'mucmay_sales_single_note', 12 );
+    add_filter( 'manage_edit-product_columns', 'mucmay_sales_product_column', 30 );
+    add_action( 'manage_product_posts_custom_column', 'mucmay_sales_product_column_value', 10, 2 );
+    add_action( 'admin_notices', 'mucmay_sales_admin_plugin_notice' );
     add_action( 'wp_enqueue_scripts', 'mucmay_sales_assets', 30 );
 
     add_action( 'admin_menu', static function () {

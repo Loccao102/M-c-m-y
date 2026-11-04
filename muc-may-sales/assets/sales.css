@@ -22,3 +22,20 @@
 .mm-sales-admin .mm-sales-admin__table{border:0;box-shadow:none;font-size:13px}.mm-sales-admin .mm-sales-admin__table td,.mm-sales-admin .mm-sales-admin__table th{padding:13px 27px;vertical-align:middle}.mm-sales-admin .mm-sales-admin__table thead{background:#f3ebdf}.mm-sales-admin__table td:last-child,.mm-sales-admin__table th:last-child{text-align:right;width:170px}.mm-sales-admin__product{display:flex;align-items:center;gap:12px;font-weight:700}.mm-sales-admin__product img{width:46px;height:46px;object-fit:cover;border:1px solid var(--mmline)}
 .mm-sales-admin__foot{padding:23px 26px;margin-top:20px;border:1px dashed var(--mmline);background:#faf7f1}.mm-sales-admin__foot p{margin:0;line-height:1.8;font-size:12px}.mm-sales-admin__links{display:flex;flex-wrap:wrap;gap:22px;margin-top:14px;font-size:12px}
 @media(max-width:782px){.mm-sales-admin{margin-right:10px}.mm-sales-admin__heading{padding:28px 20px}.mm-sales-admin__stamp{width:70px;height:70px;font-size:13px}.mm-sales-admin__stats{grid-template-columns:1fr}.mm-sales-admin__stat+.mm-sales-admin__stat{border-left:0;border-top:1px solid var(--mmline)}.mm-sales-admin__stat{padding:18px 20px}.mm-sales-admin__section-head{align-items:start;flex-direction:column;padding:19px 16px}.mm-sales-admin .mm-sales-admin__table td,.mm-sales-admin .mm-sales-admin__table th{padding:12px 14px}.mm-sales-admin__table td:last-child,.mm-sales-admin__table th:last-child{width:115px}}
+
+/* Version 1.1: readable count even when it is zero. */
+.mm-sales-count,
+.mm-product-row .mm-price .mm-sales-count,
+.woocommerce ul.products li.product .mm-sales-count {
+    display:inline-flex!important;align-items:center;gap:7px;
+    background:#fff8eb;border:1px solid #b68e74;color:#463a31;
+    font:700 10px/1.35 'Be Vietnam Pro',Arial,sans-serif;
+    padding:6px 9px;letter-spacing:.005em;opacity:1;visibility:visible;
+}
+.mm-sales-count strong{font-size:13px;color:#a43224;font-weight:800}
+.mm-product-row .mm-price .mm-sales-count--home{display:flex!important;margin:9px 0 0;width:max-content}
+.woocommerce ul.products li.product .mm-sales-count{margin:8px 0 5px;max-width:100%}
+.woocommerce div.product .summary .mm-sales-count--single{margin:8px 0 18px;padding:9px 13px}
+.woocommerce .woocommerce-ordering select {background-color:#fffaf2;border:1px solid #a99d8e;border-radius:0;padding:10px 14px;color:#25231e;font:600 12px/1.5 'Be Vietnam Pro',sans-serif;min-height:42px;max-width:100%;}
+.woocommerce .woocommerce-ordering select:focus-visible{outline:2px solid #b64033;outline-offset:2px}
+@media(max-width:720px){.mm-sales-count,.woocommerce ul.products li.product .mm-sales-count{font-size:9px;padding:5px 7px}.mm-sales-count strong{font-size:11px}}
