@@ -22,7 +22,7 @@ function mucmay_assets() {
     // All three families provide Vietnamese glyphs; Google Fonts serves its unicode-range subsets.
     $font_css = 'https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap&subset=vietnamese';
     wp_enqueue_style( 'mucmay-fonts', $font_css, array(), null );
-    wp_enqueue_style( 'mucmay-style', get_stylesheet_uri(), array( 'mucmay-fonts' ), '2.2.0' );
+    wp_enqueue_style( 'mucmay-style', get_stylesheet_uri(), array( 'mucmay-fonts' ), '2.3.1' );
     wp_enqueue_script( 'mucmay-main', get_template_directory_uri() . '/assets/js/main.js', array(), '2.2.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'mucmay_assets' );
