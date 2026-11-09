@@ -44,6 +44,28 @@ function mucmay_category_url( $slug ) {
     }
     return mucmay_shop_url();
 }
+/** Render WooCommerce's real lifetime sales count without inventing social-proof numbers. */
+function mucmay_product_sales_badge( $product ) {
+    if ( ! $product || ! is_a( $product, 'WC_Product' ) ) { return ''; }
+    $sales = (int) $product->get_total_sales();
+    if ( $sales < 1 ) { return ''; }
+    return '<span class="mm-product-sales" aria-label="' . esc_attr( sprintf( 'Đã bán %s sản phẩm', number_format_i18n( $sales ) ) ) . '">Đã bán ' . esc_html( number_format_i18n( $sales ) ) . '</span>';
+}
+
+/** Add the sales count to WooCommerce's standard shop/category product cards. */
+function mucmay_loop_product_sales_badge() {
+    global $product;
+    echo mucmay_product_sales_badge( $product ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Helper escapes all dynamic values.
+}
+add_action( 'woocommerce_after_shop_loop_item_title', 'mucmay_loop_product_sales_badge', 15 );
+
+/** Show the same real sales count on the product detail page. */
+function mucmay_single_product_sales_badge() {
+    global $product;
+    echo mucmay_product_sales_badge( $product ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Helper escapes all dynamic values.
+}
+add_action( 'woocommerce_single_product_summary', 'mucmay_single_product_sales_badge', 11 );
+
 function mucmay_cart_count() {
     return function_exists( 'WC' ) && WC()->cart ? (int) WC()->cart->get_cart_contents_count() : 0;
 }
@@ -80,6 +102,7 @@ function mucmay_product_card( $product_id ) {
     echo '<article class="mm-product-card">';
     echo '<a class="mm-product-photo" href="' . esc_url( $url ) . '">' . $thumb . '<span class="mm-photo-arrow" aria-hidden="true">↗</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- WordPress image HTML.
     echo '<div class="mm-product-meta">';
+    echo mucmay_product_sales_badge( $product ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Helper escapes all dynamic values.
     $terms = get_the_terms( $product_id, 'product_cat' );
     if ( ! is_wp_error( $terms ) && $terms ) { echo '<span class="mm-product-category">' . esc_html( $terms[0]->name ) . '</span>'; }
     echo '<h3><a href="' . esc_url( $url ) . '">' . esc_html( $product->get_name() ) . '</a></h3>';
