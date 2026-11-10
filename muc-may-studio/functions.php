@@ -48,7 +48,6 @@ function mucmay_category_url( $slug ) {
 function mucmay_product_sales_badge( $product ) {
     if ( ! $product || ! is_a( $product, 'WC_Product' ) ) { return ''; }
     $sales = (int) $product->get_total_sales();
-    if ( $sales < 1 ) { return ''; }
     return '<span class="mm-product-sales" aria-label="' . esc_attr( sprintf( 'Đã bán %s sản phẩm', number_format_i18n( $sales ) ) ) . '">Đã bán ' . esc_html( number_format_i18n( $sales ) ) . '</span>';
 }
 
